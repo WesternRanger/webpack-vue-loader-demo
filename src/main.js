@@ -8,7 +8,7 @@ let alert = require('./alert.vue');
 Vue.config.silent = true; // 取消所有vue日志跟警告
 //Vue.config.debug = false;
 
-let cl = new Vue({
+let cl111 = new Vue({
     el:'body',// 依附对象
     data:{
         name:'点击',

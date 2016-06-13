@@ -47,23 +47,22 @@
 	'use strict';
 	
 	/**
-	 * Created by j-chenqi on 16-6-6.
+	 * Created by WesternRanger on 16/6/13.
 	 */
-	
 	var Vue = __webpack_require__(1);
-	var alert = __webpack_require__(3);
+	var confirm = __webpack_require__(10);
 	
 	Vue.config.silent = true; // 取消所有vue日志跟警告
 	//Vue.config.debug = false;
 	
-	var cl = new Vue({
+	var cl111 = new Vue({
 	    el: 'body', // 依附对象
 	    data: {
 	        name: '点击',
-	        flag: false //控制弹框出现
-	    },
+	        flag: false },
+	    //控制弹框出现
 	    components: { //依赖组件
-	        'alert': alert
+	        'confirm': confirm
 	    },
 	    computed: { //控制弹框
 	        ok: function ok() {
@@ -71,12 +70,22 @@
 	        }
 	    },
 	    events: { //接受来自组件的消息
-	        'post-msg': function postMsg(msg) {
-	            this.flag = msg;
+	        'confirm-msg': function confirmMsg(msg) {
+	            //debugger;
+	            this.flag = msg.closeConfirm;
+	            if (msg.cancelCallback) {
+	                //点击取消
+	                console.log(4444);
+	            }
+	            if (msg.sureCallback) {
+	                //点击确定
+	                msg.sureCallback();
+	            }
 	        }
 	    },
 	    methods: { //点击事件
 	        clickHandler: function clickHandler(e) {
+	            //debugger;
 	            this.flag = true;
 	        }
 	    }
@@ -2946,75 +2955,9 @@
 	};
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__webpack_require__(4)
-	__vue_script__ = __webpack_require__(8)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] src/alert.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(9)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "./alert.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(5);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(7)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./alert.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./alert.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(6)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "\n.alert-component{\n    width:3rem;\n    height:3rem;\n    line-height: 3rem;\n    text-align: center;\n    border:#ff9da4 solid 1px;\n    border-radius: 5px;\n    position:fixed;\n    left:50%;\n    top:50%;\n    margin:-1.5rem 0 0 -1.5rem;\n    z-index:10001;\n    background: #e0e0e0;\n    font-size:0.3rem;\n}\n.mask{\n    position: fixed;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    background:rgba(0,0,0,0.5);\n    z-index:10000;\n}\n", "", {"version":3,"sources":["/./src/alert.vue?8f9d4776"],"names":[],"mappings":";AACA;IACA,WAAA;IACA,YAAA;IACA,kBAAA;IACA,mBAAA;IACA,yBAAA;IACA,mBAAA;IACA,eAAA;IACA,SAAA;IACA,QAAA;IACA,2BAAA;IACA,cAAA;IACA,oBAAA;IACA,iBAAA;CACA;AACA;IACA,gBAAA;IACA,MAAA;IACA,QAAA;IACA,SAAA;IACA,OAAA;IACA,2BAAA;IACA,cAAA;CACA","file":"alert.vue","sourcesContent":["<style>\n    .alert-component{\n        width:3rem;\n        height:3rem;\n        line-height: 3rem;\n        text-align: center;\n        border:#ff9da4 solid 1px;\n        border-radius: 5px;\n        position:fixed;\n        left:50%;\n        top:50%;\n        margin:-1.5rem 0 0 -1.5rem;\n        z-index:10001;\n        background: #e0e0e0;\n        font-size:0.3rem;\n    }\n    .mask{\n        position: fixed;\n        top:0;\n        right:0;\n        bottom:0;\n        left:0;\n        background:rgba(0,0,0,0.5);\n        z-index:10000;\n    }\n</style>\n<template>\n    <div class=\"alert-component\">\n        {{msg}}\n    </div>\n    <div class=\"mask\" v-on:click=\"clickHandler\"></div>\n</template>\n<script>\n    module.exports ={\n        data:function(){\n            return {\n                msg:['alert component'],\n            };\n        },\n        methods:{\n            clickHandler:function(e){\n                this.$dispatch('post-msg', false);\n            }\n        }\n    }\n\n</script>"],"sourceRoot":"webpack://"}]);
-	
-	// exports
-
-
-/***/ },
+/* 3 */,
+/* 4 */,
+/* 5 */,
 /* 6 */
 /***/ function(module, exports) {
 
@@ -3292,30 +3235,134 @@
 
 
 /***/ },
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(11)
+	__vue_script__ = __webpack_require__(13)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src/confirm.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(14)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "./confirm.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(12);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./confirm.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./confirm.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(6)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\n\n.ncf-confirm{\n    width:4.5rem;\n    text-align: center;\n    border-radius: 5px;\n    position:fixed;\n    left:50%;\n    top:50%;\n    transform:translate(-50%,-50%);\n    -webkit-transform: translate(-50%,-50%);\n    z-index:10001;\n    background: #fff;\n    font-size:0.3rem;\n}\n.conf-cont {\n    width:3.9rem;\n    padding:0.3rem;\n}\n.conf-btn-grp{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-top:#e5e5e5 solid 1px;\n}\n.conf-cancel{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n    border-right:1px solid #e5e5e5;\n}\n.conf-sure{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n}\n.mask{\n    position: fixed;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    background:rgba(0,0,0,0.5);\n    z-index:10000;\n}\n", "", {"version":3,"sources":["/./src/confirm.vue?06d6647c"],"names":[],"mappings":";;AAEA;IACA,aAAA;IACA,mBAAA;IACA,mBAAA;IACA,eAAA;IACA,SAAA;IACA,QAAA;IACA,+BAAA;IACA,wCAAA;IACA,cAAA;IACA,iBAAA;IACA,iBAAA;CACA;AACA;IACA,aAAA;IACA,eAAA;CACA;AACA;IACA,qBAAA;IAAA,qBAAA;IAAA,cAAA;IACA,yBAAA;QAAA,sBAAA;YAAA,wBAAA;IACA,6BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;IACA,+BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;CACA;AACA;IACA,gBAAA;IACA,MAAA;IACA,QAAA;IACA,SAAA;IACA,OAAA;IACA,2BAAA;IACA,cAAA;CACA","file":"confirm.vue","sourcesContent":["<style>\n\n    .ncf-confirm{\n        width:4.5rem;\n        text-align: center;\n        border-radius: 5px;\n        position:fixed;\n        left:50%;\n        top:50%;\n        transform:translate(-50%,-50%);\n        -webkit-transform: translate(-50%,-50%);\n        z-index:10001;\n        background: #fff;\n        font-size:0.3rem;\n    }\n    .conf-cont {\n        width:3.9rem;\n        padding:0.3rem;\n    }\n    .conf-btn-grp{\n        display: flex;\n        justify-content: center;\n        border-top:#e5e5e5 solid 1px;\n    }\n    .conf-cancel{\n        flex:1;\n        padding:0.15rem 0;\n        border-right:1px solid #e5e5e5;\n    }\n    .conf-sure{\n        flex:1;\n        padding:0.15rem 0;\n    }\n    .mask{\n        position: fixed;\n        top:0;\n        right:0;\n        bottom:0;\n        left:0;\n        background:rgba(0,0,0,0.5);\n        z-index:10000;\n    }\n</style>\n<template>\n    <div class=\"ncf-confirm\">\n        <div class=\"conf-cont\">{{msg}}<br>{{propmsg}}</div>\n        <div class=\"conf-btn-grp\">\n            <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"isCancel\">取消</div>\n            <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"isSure\">确定</div>\n        </div>\n    </div>\n    <div class=\"mask\" v-on:click=\"clickHandler\"></div>\n</template>\n<script>\n\n    let maskMsg = {\n            closeConfirm:false,\n        },\n        cancelMsg = {\n            closeConfirm:false,\n            cancelCallback:function(){\n                console.log('cancel');\n            }\n        },\n        sureMsg = {\n            closeConfirm:false,\n            sureCallback:function(){\n                console.log('sure');\n            }\n        };\n\n    module.exports ={\n        data:function(){\n            return {// 使用props获取属性来覆盖\n                msg:['confirm component'],\n                canc:1,\n                sure:0\n            };\n        },\n        props:['canc','sure','msg'],\n        computed:{//渲染取消确定按钮\n            isCancel:function(){\n                return this.canc;\n            },\n            isSure:function(){\n                return this.sure;\n            }\n        },\n        methods:{\n            clickHandler:function(e){//隐藏\n                this.$dispatch('confirm-msg', maskMsg);\n            },\n            doCancel:function(){//点击取消\n                this.$dispatch('confirm-msg', cancelMsg);\n            },\n            doSure:function(){//点击确定\n                this.$dispatch('confirm-msg', sureMsg);\n            }\n        }\n    }\n\n</script>"],"sourceRoot":"webpack://"}]);
+	
+	// exports
+
+
+/***/ },
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
 	
+	var maskMsg = {
+	    closeConfirm: false
+	},
+	    cancelMsg = {
+	    closeConfirm: false,
+	    cancelCallback: function cancelCallback() {
+	        console.log('cancel');
+	    }
+	},
+	    sureMsg = {
+	    closeConfirm: false,
+	    sureCallback: function sureCallback() {
+	        console.log('sure');
+	    }
+	};
+	
 	module.exports = {
 	    data: function data() {
 	        return {
-	            msg: ['alert component']
+	            msg: ['confirm component'],
+	            canc: 1,
+	            sure: 0
 	        };
+	    },
+	    props: ['canc', 'sure', 'msg'],
+	    computed: {
+	        isCancel: function isCancel() {
+	            return this.canc;
+	        },
+	        isSure: function isSure() {
+	            return this.sure;
+	        }
 	    },
 	    methods: {
 	        clickHandler: function clickHandler(e) {
-	            this.$dispatch('post-msg', false);
+	            this.$dispatch('confirm-msg', maskMsg);
+	        },
+	        doCancel: function doCancel() {
+	            this.$dispatch('confirm-msg', cancelMsg);
+	        },
+	        doSure: function doSure() {
+	            this.$dispatch('confirm-msg', sureMsg);
 	        }
 	    }
 	};
 
 /***/ },
-/* 9 */
+/* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"alert-component\">\n    {{msg}}\n</div>\n<div class=\"mask\" v-on:click=\"clickHandler\"></div>\n";
+	module.exports = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"ncf-confirm\">\n    <div class=\"conf-cont\">{{msg}}<br>{{propmsg}}</div>\n    <div class=\"conf-btn-grp\">\n        <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"isCancel\">取消</div>\n        <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"isSure\">确定</div>\n    </div>\n</div>\n<div class=\"mask\" v-on:click=\"clickHandler\"></div>\n";
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index1.js.map

@@ -2,10 +2,14 @@
  * Created by j-chenqi on 16-6-6.
  */
 module.exports = {
-    entry: './src/main.js',
+    // 入口文件
+    entry: {
+        main:'./src/main.js',
+        index1:'./src/index1.js'
+    },
     output: {
         path: __dirname, // 输出文件的保存路径
-        filename: 'dist/index.js' // 输出文件的名称
+        filename: 'dist/[name].js' // 输出文件的名称
     },
     module: {
         loaders: [

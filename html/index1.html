@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>简单的alert</title>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
+    <title>confirm组件</title>
     <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" name="viewport" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -28,10 +28,10 @@
     <script src="../lib/flex.js"></script>
 </head>
 <body>
-    <alert v-if="ok"></alert>
-    <button class="root-btn" v-on:click="clickHandler">
-        {{name}}
-    </button>
-    <script src="../dist/main.js"></script>
+<confirm v-if="ok" :canc="0" :sure='1' msg="woooooo"></confirm>
+<button class="root-btn" v-on:click="clickHandler">
+    {{name}}
+</button>
+<script src="../dist/index1.js"></script>
 </body>
 </html>
