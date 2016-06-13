@@ -7,7 +7,9 @@
      <h2>hello, {{name}}</h2>
      <input v-model="name">
      <ul>
-        <li>{{item}}</li>
+         <li v-for="item in items">
+             {{ item.message }}
+         </li>
      </ul>
  </template>
  <script>
@@ -16,7 +18,19 @@
          data: function(){
              return {
                  name: "western-ranger",
-                 item: "列表项"
+                 items: [
+                     { message: 'Foo1' },
+                     { message: 'Foo3' },
+                     { message: 'Foo4' },
+                     { message: 'Foo4' },
+                     { message: 'Foo4' },
+                     { message: 'Foo4' },
+                     { message: 'Foo4' },
+                     { message: 'Foo4' },
+                     { message: 'Foo5' },
+                     { message: 'Foo6' },
+                     { message: 'Bar7' }
+                 ]
              };
          }
      };

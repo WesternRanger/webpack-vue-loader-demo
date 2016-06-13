@@ -49,30 +49,33 @@
 	/**
 	 * Created by WesternRanger on 16/6/13.
 	 */
-	var Vue = __webpack_require__(1);
-	var confirm = __webpack_require__(10);
+	var Vue = __webpack_require__(1),
+	    confirm = __webpack_require__(10),
+	    $window = document.querySelector('html'),
+	    $body = document.querySelector('body');
 	
 	Vue.config.silent = true; // 取消所有vue日志跟警告
 	//Vue.config.debug = false;
+	var demoArr = [{ message: 'Foo1' }, { message: 'Foo3' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo5' }, { message: 'Foo6' }, { message: 'Bar7' }];
 	
 	var cl111 = new Vue({
 	    el: 'body', // 依附对象
 	    data: {
 	        name: '点击',
-	        flag: false },
-	    //控制弹框出现
+	        flag: false, //控制弹框出现
+	        items: demoArr
+	    },
 	    components: { //依赖组件
 	        'confirm': confirm
-	    },
-	    computed: { //控制弹框
-	        ok: function ok() {
-	            return this.flag;
-	        }
 	    },
 	    events: { //接受来自组件的消息
 	        'confirm-msg': function confirmMsg(msg) {
 	            //debugger;
-	            this.flag = msg.closeConfirm;
+	            this.flag = msg.closeConfirm; //关闭弹框-false
+	
+	            $window.className = '';
+	            $body.className = '';
+	
 	            if (msg.cancelCallback) {
 	                //点击取消
 	                console.log(4444);
@@ -86,6 +89,8 @@
 	    methods: { //点击事件
 	        clickHandler: function clickHandler(e) {
 	            //debugger;
+	            $window.className = 'fullMask';
+	            $body.className = 'fullMask';
 	            this.flag = true;
 	        }
 	    }
@@ -3300,17 +3305,18 @@
 	
 	
 	// module
-	exports.push([module.id, "\n\n.ncf-confirm{\n    width:4.5rem;\n    text-align: center;\n    border-radius: 5px;\n    position:fixed;\n    left:50%;\n    top:50%;\n    transform:translate(-50%,-50%);\n    -webkit-transform: translate(-50%,-50%);\n    z-index:10001;\n    background: #fff;\n    font-size:0.3rem;\n}\n.conf-cont {\n    width:3.9rem;\n    padding:0.3rem;\n}\n.conf-btn-grp{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-top:#e5e5e5 solid 1px;\n}\n.conf-cancel{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n    border-right:1px solid #e5e5e5;\n}\n.conf-sure{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n}\n.mask{\n    position: fixed;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    background:rgba(0,0,0,0.5);\n    z-index:10000;\n}\n", "", {"version":3,"sources":["/./src/confirm.vue?06d6647c"],"names":[],"mappings":";;AAEA;IACA,aAAA;IACA,mBAAA;IACA,mBAAA;IACA,eAAA;IACA,SAAA;IACA,QAAA;IACA,+BAAA;IACA,wCAAA;IACA,cAAA;IACA,iBAAA;IACA,iBAAA;CACA;AACA;IACA,aAAA;IACA,eAAA;CACA;AACA;IACA,qBAAA;IAAA,qBAAA;IAAA,cAAA;IACA,yBAAA;QAAA,sBAAA;YAAA,wBAAA;IACA,6BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;IACA,+BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;CACA;AACA;IACA,gBAAA;IACA,MAAA;IACA,QAAA;IACA,SAAA;IACA,OAAA;IACA,2BAAA;IACA,cAAA;CACA","file":"confirm.vue","sourcesContent":["<style>\n\n    .ncf-confirm{\n        width:4.5rem;\n        text-align: center;\n        border-radius: 5px;\n        position:fixed;\n        left:50%;\n        top:50%;\n        transform:translate(-50%,-50%);\n        -webkit-transform: translate(-50%,-50%);\n        z-index:10001;\n        background: #fff;\n        font-size:0.3rem;\n    }\n    .conf-cont {\n        width:3.9rem;\n        padding:0.3rem;\n    }\n    .conf-btn-grp{\n        display: flex;\n        justify-content: center;\n        border-top:#e5e5e5 solid 1px;\n    }\n    .conf-cancel{\n        flex:1;\n        padding:0.15rem 0;\n        border-right:1px solid #e5e5e5;\n    }\n    .conf-sure{\n        flex:1;\n        padding:0.15rem 0;\n    }\n    .mask{\n        position: fixed;\n        top:0;\n        right:0;\n        bottom:0;\n        left:0;\n        background:rgba(0,0,0,0.5);\n        z-index:10000;\n    }\n</style>\n<template>\n    <div class=\"ncf-confirm\">\n        <div class=\"conf-cont\">{{msg}}<br>{{propmsg}}</div>\n        <div class=\"conf-btn-grp\">\n            <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"isCancel\">取消</div>\n            <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"isSure\">确定</div>\n        </div>\n    </div>\n    <div class=\"mask\" v-on:click=\"clickHandler\"></div>\n</template>\n<script>\n\n    let maskMsg = {\n            closeConfirm:false,\n        },\n        cancelMsg = {\n            closeConfirm:false,\n            cancelCallback:function(){\n                console.log('cancel');\n            }\n        },\n        sureMsg = {\n            closeConfirm:false,\n            sureCallback:function(){\n                console.log('sure');\n            }\n        };\n\n    module.exports ={\n        data:function(){\n            return {// 使用props获取属性来覆盖\n                msg:['confirm component'],\n                canc:1,\n                sure:0\n            };\n        },\n        props:['canc','sure','msg'],\n        computed:{//渲染取消确定按钮\n            isCancel:function(){\n                return this.canc;\n            },\n            isSure:function(){\n                return this.sure;\n            }\n        },\n        methods:{\n            clickHandler:function(e){//隐藏\n                this.$dispatch('confirm-msg', maskMsg);\n            },\n            doCancel:function(){//点击取消\n                this.$dispatch('confirm-msg', cancelMsg);\n            },\n            doSure:function(){//点击确定\n                this.$dispatch('confirm-msg', sureMsg);\n            }\n        }\n    }\n\n</script>"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "\n.fullMask{\n    height:100%;\n    overflow:hidden;\n}\n.ncf-confirm{\n    width:4.5rem;\n    text-align: center;\n    border-radius: 5px;\n    position:fixed;\n    left:50%;\n    top:50%;\n    transform:translate(-50%,-50%);\n    -webkit-transform: translate(-50%,-50%);\n    z-index:10001;\n    background: #fff;\n    font-size:0.3rem;\n}\n.conf-cont {\n    width:3.9rem;\n    margin:0.3rem;\n    max-height:3rem;\n    overflow-y: auto;\n}\n.conf-btn-grp{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border-top:#e5e5e5 solid 1px;\n}\n.conf-cancel{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n    border-right:1px solid #e5e5e5;\n}\n.conf-sure{\n    -webkit-box-flex:1;\n        -ms-flex:1;\n            flex:1;\n    padding:0.15rem 0;\n}\n.mask{\n    position: fixed;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    background:rgba(0,0,0,0.5);\n    z-index:10000;\n}\n", "", {"version":3,"sources":["/./src/confirm.vue?0da9f56b"],"names":[],"mappings":";AACA;IACA,YAAA;IACA,gBAAA;CACA;AACA;IACA,aAAA;IACA,mBAAA;IACA,mBAAA;IACA,eAAA;IACA,SAAA;IACA,QAAA;IACA,+BAAA;IACA,wCAAA;IACA,cAAA;IACA,iBAAA;IACA,iBAAA;CACA;AACA;IACA,aAAA;IACA,cAAA;IACA,gBAAA;IACA,iBAAA;CACA;AACA;IACA,qBAAA;IAAA,qBAAA;IAAA,cAAA;IACA,yBAAA;QAAA,sBAAA;YAAA,wBAAA;IACA,6BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;IACA,+BAAA;CACA;AACA;IACA,mBAAA;QAAA,WAAA;YAAA,OAAA;IACA,kBAAA;CACA;AACA;IACA,gBAAA;IACA,MAAA;IACA,QAAA;IACA,SAAA;IACA,OAAA;IACA,2BAAA;IACA,cAAA;CACA","file":"confirm.vue","sourcesContent":["<style>\n    .fullMask{\n        height:100%;\n        overflow:hidden;\n    }\n    .ncf-confirm{\n        width:4.5rem;\n        text-align: center;\n        border-radius: 5px;\n        position:fixed;\n        left:50%;\n        top:50%;\n        transform:translate(-50%,-50%);\n        -webkit-transform: translate(-50%,-50%);\n        z-index:10001;\n        background: #fff;\n        font-size:0.3rem;\n    }\n    .conf-cont {\n        width:3.9rem;\n        margin:0.3rem;\n        max-height:3rem;\n        overflow-y: auto;\n    }\n    .conf-btn-grp{\n        display: flex;\n        justify-content: center;\n        border-top:#e5e5e5 solid 1px;\n    }\n    .conf-cancel{\n        flex:1;\n        padding:0.15rem 0;\n        border-right:1px solid #e5e5e5;\n    }\n    .conf-sure{\n        flex:1;\n        padding:0.15rem 0;\n    }\n    .mask{\n        position: fixed;\n        top:0;\n        right:0;\n        bottom:0;\n        left:0;\n        background:rgba(0,0,0,0.5);\n        z-index:10000;\n    }\n</style>\n<template>\n    <div class=\"ncf-confirm\">\n        <div class=\"conf-cont\">\n            <vue_demo></vue_demo>\n        </div>\n        <div class=\"conf-btn-grp\">\n            <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"canc\">取消</div>\n            <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"sure\">确定</div>\n        </div>\n    </div>\n    <div class=\"mask\" v-on:click=\"clickHandler\"></div>\n</template>\n<script>\n    var diyBox = require('./vue_demo.vue');//定义弹框内容\n    let maskMsg = {\n            closeConfirm:false,\n        },\n        cancelMsg = {\n            closeConfirm:false,\n            cancelCallback:function(){\n                console.log('cancel');\n            }\n        },\n        sureMsg = {\n            closeConfirm:false,\n            sureCallback:function(){\n                console.log('sure');\n            }\n        };\n\n    module.exports ={\n        data:function(){\n            return {\n                msg:'hello world',\n                canc:1,\n                sure:0\n            };\n        },\n        components:{\n            vue_demo:diyBox//填充box\n        },\n        props:['canc','sure','msg'],//获取赋值属性\n        methods:{\n            clickHandler:function(e){//隐藏\n                this.$dispatch('confirm-msg', maskMsg);\n            },\n            doCancel:function(){//点击取消\n                this.$dispatch('confirm-msg', cancelMsg);\n            },\n            doSure:function(){//点击确定\n                this.$dispatch('confirm-msg', sureMsg);\n            }\n        }\n    }\n\n</script>"],"sourceRoot":"webpack://"}]);
 	
 	// exports
 
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
+	var diyBox = __webpack_require__(34);
 	var maskMsg = {
 	    closeConfirm: false
 	},
@@ -3330,20 +3336,14 @@
 	module.exports = {
 	    data: function data() {
 	        return {
-	            msg: ['confirm component'],
+	            msg: 'hello world',
 	            canc: 1,
 	            sure: 0
 	        };
 	    },
+	    components: {
+	        vue_demo: diyBox },
 	    props: ['canc', 'sure', 'msg'],
-	    computed: {
-	        isCancel: function isCancel() {
-	            return this.canc;
-	        },
-	        isSure: function isSure() {
-	            return this.sure;
-	        }
-	    },
 	    methods: {
 	        clickHandler: function clickHandler(e) {
 	            this.$dispatch('confirm-msg', maskMsg);
@@ -3361,7 +3361,116 @@
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"ncf-confirm\">\n    <div class=\"conf-cont\">{{msg}}<br>{{propmsg}}</div>\n    <div class=\"conf-btn-grp\">\n        <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"isCancel\">取消</div>\n        <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"isSure\">确定</div>\n    </div>\n</div>\n<div class=\"mask\" v-on:click=\"clickHandler\"></div>\n";
+	module.exports = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"ncf-confirm\">\n    <div class=\"conf-cont\">\n        <vue_demo></vue_demo>\n    </div>\n    <div class=\"conf-btn-grp\">\n        <div class=\"conf-cancel\" v-on:click=\"doCancel\" v-if=\"canc\">取消</div>\n        <div class=\"conf-sure\" v-on:click=\"doSure\" v-if=\"sure\">确定</div>\n    </div>\n</div>\n<div class=\"mask\" v-on:click=\"clickHandler\"></div>\n";
+
+/***/ },
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(35)
+	__vue_script__ = __webpack_require__(37)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] src/vue_demo.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(38)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "./vue_demo.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(36);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./vue_demo.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./vue_demo.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(6)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\nh2{\n    color: red;\n}\n", "", {"version":3,"sources":["/./src/vue_demo.vue?3a69c785"],"names":[],"mappings":";AACA;IACA,WAAA;CACA","file":"vue_demo.vue","sourcesContent":["<style>\n     h2{\n         color: red;\n     }\n </style>\n <template>\n     <h2>hello, {{name}}</h2>\n     <input v-model=\"name\">\n     <ul>\n         <li v-for=\"item in items\">\n             {{ item.message }}\n         </li>\n     </ul>\n </template>\n <script>\n     //  构造弹窗组件\n     module.exports = {\n         data: function(){\n             return {\n                 name: \"western-ranger\",\n                 items: [\n                     { message: 'Foo1' },\n                     { message: 'Foo3' },\n                     { message: 'Foo4' },\n                     { message: 'Foo4' },\n                     { message: 'Foo4' },\n                     { message: 'Foo4' },\n                     { message: 'Foo4' },\n                     { message: 'Foo4' },\n                     { message: 'Foo5' },\n                     { message: 'Foo6' },\n                     { message: 'Bar7' }\n                 ]\n             };\n         }\n     };\n </script>"],"sourceRoot":"webpack://"}]);
+	
+	// exports
+
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	    data: function data() {
+	        return {
+	            name: "western-ranger",
+	            items: [{ message: 'Foo1' }, { message: 'Foo3' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo4' }, { message: 'Foo5' }, { message: 'Foo6' }, { message: 'Bar7' }]
+	        };
+	    }
+	};
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n\n\n\n<h2>hello, {{name}}</h2>\n<input v-model=\"name\">\n<ul>\n    <li v-for=\"item in items\">\n        {{ item.message }}\n    </li>\n</ul>\n";
 
 /***/ }
 /******/ ]);
