@@ -12,5 +12,6 @@ module.exports = {
             {test: /\.vue$/,loader: 'vue'},
             {test: /\.js$/,loaders: ['babel?presets[]=es2015']}
         ]
-    }
+    },
+    devtool: 'source-map'
 };

@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,16 +45,40 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	/**
 	 * Created by j-chenqi on 16-6-6.
 	 */
+	
 	var Vue = __webpack_require__(1);
-	var Demo = __webpack_require__(3);
-	new Vue({
-	    el: "body",
-	    components: {
-	        Demo: Demo
+	var alert = __webpack_require__(3);
+	
+	Vue.config.silent = true; // 取消所有vue日志跟警告
+	//Vue.config.debug = false;
+	
+	var cl = new Vue({
+	    el: 'body', // 依附对象
+	    data: {
+	        name: '点击',
+	        flag: false //控制弹框出现
+	    },
+	    components: { //依赖组件
+	        'alert': alert
+	    },
+	    computed: { //控制弹框
+	        ok: function ok() {
+	            return this.flag;
+	        }
+	    },
+	    events: { //接受来自组件的消息
+	        'post-msg': function postMsg(msg) {
+	            this.flag = msg;
+	        }
+	    },
+	    methods: { //点击事件
+	        clickHandler: function clickHandler(e) {
+	            this.flag = true;
+	        }
 	    }
 	});
 
@@ -2821,15 +2845,15 @@
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	// shim for using process in browser
-
+	
 	var process = module.exports = {};
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
-
+	
 	function cleanUpNextTick() {
 	    if (!draining || !currentQueue) {
 	        return;
@@ -2844,14 +2868,14 @@
 	        drainQueue();
 	    }
 	}
-
+	
 	function drainQueue() {
 	    if (draining) {
 	        return;
 	    }
 	    var timeout = setTimeout(cleanUpNextTick);
 	    draining = true;
-
+	
 	    var len = queue.length;
 	    while (len) {
 	        currentQueue = queue;
@@ -2868,7 +2892,7 @@
 	    draining = false;
 	    clearTimeout(timeout);
 	}
-
+	
 	process.nextTick = function (fun) {
 	    var args = new Array(arguments.length - 1);
 	    if (arguments.length > 1) {
@@ -2881,7 +2905,7 @@
 	        setTimeout(drainQueue, 0);
 	    }
 	};
-
+	
 	// v8 likes predictible objects
 	function Item(fun, array) {
 	    this.fun = fun;
@@ -2896,9 +2920,9 @@
 	process.argv = [];
 	process.version = ''; // empty string to avoid regexp issues
 	process.versions = {};
-
+	
 	function noop() {}
-
+	
 	process.on = noop;
 	process.addListener = noop;
 	process.once = noop;
@@ -2906,11 +2930,11 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
-
+	
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
 	};
-
+	
 	process.cwd = function () {
 	    return '/';
 	};
@@ -2931,7 +2955,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] src\\vue_demo.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] src/alert.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(9)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -2942,7 +2966,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "./vue_demo.vue"
+	  var id = "./alert.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -2955,7 +2979,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-
+	
 	// load the styles
 	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -2966,8 +2990,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./vue_demo.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./vue_demo.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./alert.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?sourceMap!./../node_modules/vue-loader/lib/style-rewriter.js!./../node_modules/vue-loader/lib/selector.js?type=style&index=0!./alert.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -2982,11 +3006,11 @@
 
 	exports = module.exports = __webpack_require__(6)();
 	// imports
-
-
+	
+	
 	// module
-	exports.push([module.id, "\nh2{\n    color: red;\n}\n", ""]);
-
+	exports.push([module.id, "\n.alert-component{\n    width:3rem;\n    height:3rem;\n    line-height: 3rem;\n    text-align: center;\n    border:#ff9da4 solid 1px;\n    border-radius: 5px;\n    position:fixed;\n    left:50%;\n    top:50%;\n    margin:-1.5rem 0 0 -1.5rem;\n    z-index:10001;\n    background: #e0e0e0;\n    font-size:0.3rem;\n}\n.mask{\n    position: fixed;\n    top:0;\n    right:0;\n    bottom:0;\n    left:0;\n    background:rgba(0,0,0,0.5);\n    z-index:10000;\n}\n", "", {"version":3,"sources":["/./src/alert.vue?8f9d4776"],"names":[],"mappings":";AACA;IACA,WAAA;IACA,YAAA;IACA,kBAAA;IACA,mBAAA;IACA,yBAAA;IACA,mBAAA;IACA,eAAA;IACA,SAAA;IACA,QAAA;IACA,2BAAA;IACA,cAAA;IACA,oBAAA;IACA,iBAAA;CACA;AACA;IACA,gBAAA;IACA,MAAA;IACA,QAAA;IACA,SAAA;IACA,OAAA;IACA,2BAAA;IACA,cAAA;CACA","file":"alert.vue","sourcesContent":["<style>\n    .alert-component{\n        width:3rem;\n        height:3rem;\n        line-height: 3rem;\n        text-align: center;\n        border:#ff9da4 solid 1px;\n        border-radius: 5px;\n        position:fixed;\n        left:50%;\n        top:50%;\n        margin:-1.5rem 0 0 -1.5rem;\n        z-index:10001;\n        background: #e0e0e0;\n        font-size:0.3rem;\n    }\n    .mask{\n        position: fixed;\n        top:0;\n        right:0;\n        bottom:0;\n        left:0;\n        background:rgba(0,0,0,0.5);\n        z-index:10000;\n    }\n</style>\n<template>\n    <div class=\"alert-component\">\n        {{msg}}\n    </div>\n    <div class=\"mask\" v-on:click=\"clickHandler\"></div>\n</template>\n<script>\n    module.exports ={\n        data:function(){\n            return {\n                msg:['alert component'],\n            };\n        },\n        methods:{\n            clickHandler:function(e){\n                this.$dispatch('post-msg', false);\n            }\n        }\n    }\n\n</script>"],"sourceRoot":"webpack://"}]);
+	
 	// exports
 
 
@@ -2995,7 +3019,7 @@
 /***/ function(module, exports) {
 
 	"use strict";
-
+	
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
 		Author Tobias Koppers @sokra
@@ -3003,7 +3027,7 @@
 	// css base code, injected by the css-loader
 	module.exports = function () {
 		var list = [];
-
+	
 		// return the list of modules as css string
 		list.toString = function toString() {
 			var result = [];
@@ -3017,7 +3041,7 @@
 			}
 			return result.join("");
 		};
-
+	
 		// import a list of modules into the list
 		list.i = function (modules, mediaQuery) {
 			if (typeof modules === "string") modules = [[null, modules, ""]];
@@ -3070,23 +3094,23 @@
 		singletonElement = null,
 		singletonCounter = 0,
 		styleElementsInsertedAtTop = [];
-
+	
 	module.exports = function(list, options) {
 		if(false) {
 			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
-
+	
 		options = options || {};
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
+	
 		// By default, add <style> tags to the bottom of <head>.
 		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
+	
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
-
+	
 		return function update(newList) {
 			var mayRemove = [];
 			for(var i = 0; i < styles.length; i++) {
@@ -3109,7 +3133,7 @@
 			}
 		};
 	}
-
+	
 	function addStylesToDom(styles, options) {
 		for(var i = 0; i < styles.length; i++) {
 			var item = styles[i];
@@ -3131,7 +3155,7 @@
 			}
 		}
 	}
-
+	
 	function listToStyles(list) {
 		var styles = [];
 		var newStyles = {};
@@ -3149,7 +3173,7 @@
 		}
 		return styles;
 	}
-
+	
 	function insertStyleElement(options, styleElement) {
 		var head = getHeadElement();
 		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
@@ -3168,7 +3192,7 @@
 			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
 		}
 	}
-
+	
 	function removeStyleElement(styleElement) {
 		styleElement.parentNode.removeChild(styleElement);
 		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
@@ -3176,17 +3200,17 @@
 			styleElementsInsertedAtTop.splice(idx, 1);
 		}
 	}
-
+	
 	function createStyleElement(options) {
 		var styleElement = document.createElement("style");
 		styleElement.type = "text/css";
 		insertStyleElement(options, styleElement);
 		return styleElement;
 	}
-
+	
 	function addStyle(obj, options) {
 		var styleElement, update, remove;
-
+	
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
 			styleElement = singletonElement || (singletonElement = createStyleElement(options));
@@ -3199,9 +3223,9 @@
 				removeStyleElement(styleElement);
 			};
 		}
-
+	
 		update(obj);
-
+	
 		return function updateStyle(newObj) {
 			if(newObj) {
 				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
@@ -3212,19 +3236,19 @@
 			}
 		};
 	}
-
+	
 	var replaceText = (function () {
 		var textStore = [];
-
+	
 		return function (index, replacement) {
 			textStore[index] = replacement;
 			return textStore.filter(Boolean).join('\n');
 		};
 	})();
-
+	
 	function applyToSingletonTag(styleElement, index, remove, obj) {
 		var css = remove ? "" : obj.css;
-
+	
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = replaceText(index, css);
 		} else {
@@ -3238,16 +3262,16 @@
 			}
 		}
 	}
-
+	
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
 		var sourceMap = obj.sourceMap;
-
+	
 		if (media) {
 			styleElement.setAttribute("media", media);
 		}
-
+	
 		if (sourceMap) {
 			// https://developer.chrome.com/devtools/docs/javascript-debugging
 			// this makes source maps inside style tags work properly in Chrome
@@ -3255,7 +3279,7 @@
 			// http://stackoverflow.com/a/26603875
 			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 		}
-
+	
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = css;
 		} else {
@@ -3271,13 +3295,18 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	"use strict";
-
+	'use strict';
+	
 	module.exports = {
 	    data: function data() {
 	        return {
-	            name: "western-ranger"
+	            msg: ['alert component']
 	        };
+	    },
+	    methods: {
+	        clickHandler: function clickHandler(e) {
+	            this.$dispatch('post-msg', false);
+	        }
 	    }
 	};
 
@@ -3285,7 +3314,8 @@
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n\n\n\n<h2>hello, {{name}}</h2>\n";
+	module.exports = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<div class=\"alert-component\">\n    {{msg}}\n</div>\n<div class=\"mask\" v-on:click=\"clickHandler\"></div>\n";
 
 /***/ }
 /******/ ]);
+//# sourceMappingURL=index.js.map
