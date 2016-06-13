@@ -80,6 +80,7 @@ let cl111 = new Vue({
             //debugger;
             this.flag = msg.closeConfirm;//关闭弹框-false
 
+            //背景滚动锁去掉
             $window.className='';
             $body.className='';
 
@@ -94,6 +95,7 @@ let cl111 = new Vue({
     methods: {//点击事件
         clickHandler: function (e) {
             //debugger;
+            //防止背景滚动
             $window.className='fullMask';
             $body.className='fullMask';
             this.flag = true;

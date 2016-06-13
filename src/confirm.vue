@@ -23,16 +23,28 @@
         overflow-y: auto;
     }
     .conf-btn-grp{
+        width:100%;
+        display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+        display: -moz-box; /* Firefox 17- */
+        display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+        display: -moz-flex; /* Firefox 18+ */
         display: flex;
-        justify-content: center;
         border-top:#e5e5e5 solid 1px;
     }
     .conf-cancel{
+        -webkit-box-flex:1;
+        -moz-box-flex:1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
         flex:1;
         padding:0.15rem 0;
         border-right:1px solid #e5e5e5;
     }
     .conf-sure{
+        -webkit-box-flex:1;
+        -moz-box-flex:1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
         flex:1;
         padding:0.15rem 0;
     }
